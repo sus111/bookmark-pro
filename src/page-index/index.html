@@ -12,7 +12,20 @@
     />
   </head>
   <body>
-    <h1 class="page-title">Home</h1>
-    <a href="results.html">Results</a>
+    <h1 class="page-title">Bookmarks</h1>
+    <p>Add a new bookmark:</p>
+    <form action="results.html" id="form-add-bookmark">
+      <input
+        name="saved-url"
+        type="text"
+        required
+        id="text"
+        placeholder="Enter url"
+        value=""
+        max="100"
+        pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+      /><br />
+      <button type="submit">Bookmark url</button>
+    </form>
   </body>
 </html>

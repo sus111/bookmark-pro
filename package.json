@@ -1,8 +1,7 @@
 {
   "name": "bookmarked",
   "version": "1.0.0",
-  "description": "Bookmark your favourite sites",
-  "main": "index.js",
+  "description": "Front end app to bookmark your favourite sites",
   "repository": "https://github.com/sus111/bookmarked",
   "author": "<sgraham535@gmail.com>",
   "dependencies": {
@@ -28,6 +27,7 @@
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^1.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "regenerator-runtime": "^0.13.7",
     "standard": "^14.3.4",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",

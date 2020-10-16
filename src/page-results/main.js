@@ -3,5 +3,8 @@ require('../css/main.css');
 require('./page.css');
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded', 'page-results');
+  const params = new URLSearchParams(document.location.search);
+  const savedUrl = params.get('saved-url');
+  const successMessage = `wohoo! ${savedUrl} has been added your bookmarks`;
+  document.getElementById('success-text').textContent += successMessage;
 });

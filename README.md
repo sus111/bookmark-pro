@@ -1,4 +1,4 @@
-# Bookmarked
+# Bookmark Pro
 
 ## Prerequisites
 

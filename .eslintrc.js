@@ -7,4 +7,7 @@ module.exports = {
     browser: true,
     node: true,
   },
+  parserOption: {
+    sourceType: 'module',
+  },
 };
