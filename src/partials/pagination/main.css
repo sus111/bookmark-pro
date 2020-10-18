@@ -1,0 +1,63 @@
+.pagination {
+  max-width: 400px;
+  min-width: 300px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  padding: 20px;
+}
+
+.pagination--hide {
+  display: none;
+}
+
+.pagination .bookmark-list {
+  min-height: 250px;
+  text-indent: 20px;
+}
+.bookmark-list .bookmark-item {
+  position: relative;
+  background-color: white;
+  color: #2e302f;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookmark-item .contenteditable {
+  background-color: rgb(228, 223, 176);
+}
+
+.page-button {
+  border: 1px solid black;
+  padding: 5px;
+}
+.click-page-number {
+  background-color: lightgrey;
+  padding: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.pagination-block {
+  text-align: center;
+  width: 100%;
+}
+.pagination-block span {
+  display: inline-block;
+}
+.pagination-block .page-button {
+  background-color: grey;
+  color: white;
+}
+.pagination-block span:hover {
+  cursor: pointer;
+}
+.opacity {
+  opacity: 0.5;
+}
+.outline-none {
+  outline: none;
+  user-select: none;
+}
