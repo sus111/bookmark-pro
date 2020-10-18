@@ -2,21 +2,19 @@ require('../../css/main.css');
 require('./main.css');
 import { parsedBookmarksFromLocalStorage } from '../../js/helpers/localStorage';
 import { getElementById } from '../../js/helpers/dom';
+import { validation } from '../../js/helpers/validation';
 
 class Pagination {
-  constructor(bookmarks, deleteHandler, validationHandler, editHandler) {
+  constructor(bookmarks, deleteHandler, editHandler) {
     this.deleteBookmarkHandler = deleteHandler;
-    this.bookmarkValidationHandler = validationHandler;
     this.bookmarkEditHandler = editHandler;
     this.bookmarks = bookmarks;
     this.paginationComponent = document.querySelectorAll('.pagination');
     this.prevButton = getElementById('button-prev');
     this.nextButton = getElementById('button-next');
 
-    this.pageNumber = getElementById('page-number');
-
     this.currentPage = 1;
-    this.itemsPerPage = 3;
+    this.itemsPerPage = 20;
     this.activeBookmark;
     this.activeListItem;
     this.init();
@@ -38,7 +36,7 @@ class Pagination {
     this.prevButton.addEventListener('click', this.handlePreviousPageClick);
     this.nextButton.addEventListener('click', this.handleNextPageClick);
     this.handleNumberClick();
-    this.handleEditBlur();
+    // TODO: create func. for these 3:
     document
       .querySelectorAll('.delete-button')
       .forEach((button) =>
@@ -62,12 +60,14 @@ class Pagination {
     const bookmarkList = document.querySelectorAll('.bookmark-list')[0];
     bookmarkList.innerHTML = '';
 
-    if (page < 1) {
-      page = 1;
-    }
-    if (page > this.returnPagesTotal() - 1) {
-      page = this.returnPagesTotal();
-    }
+    // if (page < 1) {
+    //   page = 1;
+    // }
+    // if (page > this.returnPagesTotal() - 1) {
+    //   page = this.returnPagesTotal();
+    // }
+
+    page < 1 ? 1 : this.returnPagesTotal();
 
     for (
       var i = (page - 1) * this.itemsPerPage;
@@ -80,6 +80,7 @@ class Pagination {
         this.bookmarks[i].id
       );
     }
+
     this.updateChevronButtonsOpacity();
     this.updateNumberButtonOpacity();
   };
@@ -121,12 +122,12 @@ class Pagination {
 
   renderBookmarkItem = (url, currentIndex, bookmarkId) => `
     <div class='bookmark-item' id="${bookmarkId}">
-      <div contenteditable="false">
-        ${url}
+      <div id="bookmark-text" contenteditable="false">
+        <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
       </div>
       <div>
-        <span><button class="edit-button" id="${currentIndex}">edit</button></span>
-        <span><button class="delete-button" id="${currentIndex}">delete</button></span>
+        <span><button class="edit-button" id="${currentIndex}"><img src="./src/img/svg/edit.svg" id="${currentIndex}" /></button></span>
+        <span><button class="delete-button" id="${currentIndex}"><img src="./src/img/svg/delete.svg" id="${currentIndex}" /></button></span>
       </div>
     </div>`;
 
@@ -167,14 +168,33 @@ class Pagination {
     this.deleteBookmarkHandler(this.updatedUrl());
   };
 
-  handleEditBlur = () => {};
-
   setActiveBookmark = (buttonIndex) => {
     const bookmarkItems = document.querySelectorAll('.bookmark-item');
     const bookmarkId = bookmarkItems[buttonIndex].id;
     this.activeBookmark = parsedBookmarksFromLocalStorage().filter(
       (bookmark) => bookmark.id === parseInt(bookmarkId)
     )[0];
+  };
+
+  handleEditBlur = (activeTextItem, activeEditButton, activeDeleteButton) => {
+    activeTextItem.addEventListener('blur', (event) => {
+      // TODO: refactor all repeated code from handleEditClick
+      //check it's not save button click
+
+      const targetsToIgnore = ['save-button', 'edit-button', 'delete-button'];
+      if (!targetsToIgnore.includes(event.target.class)) {
+        const urlMatchesPattern = validation(activeTextItem.textContent);
+
+        if (urlMatchesPattern) {
+          activeTextItem.removeAttribute('contenteditable', 'true');
+          activeTextItem.removeAttribute('class', 'contenteditable');
+          activeEditButton.setAttribute('class', 'edit-button');
+          activeDeleteButton.disabled = false;
+
+          this.bookmarkEditHandler(this.activeBookmark, this.updatedUrl());
+        }
+      }
+    });
   };
 
   handleEditClick = (event) => {
@@ -184,33 +204,25 @@ class Pagination {
 
     // make text content editable
     const activeTextItem = this.activeListItem.children[0];
-    activeTextItem.setAttribute('contenteditable', 'true');
-    activeTextItem.setAttribute('class', 'contenteditable');
-    activeTextItem.focus();
-
-    // make edit button a save button and add event listener
     const activeEditButton = this.activeListItem.querySelectorAll(
       '.edit-button'
     )[0];
-    activeEditButton.textContent = 'Save';
-    activeEditButton.setAttribute('class', 'save-button');
-    this.handleSaveClick();
-  };
+    const activeDeleteButton = this.activeListItem.querySelectorAll(
+      '.delete-button'
+    )[0];
+    activeDeleteButton.disabled = true;
 
-  handleSaveClick = () => {
-    const saveButton = document.querySelectorAll('.save-button')[0];
-    saveButton.addEventListener('click', (event) => {
-      //   validate text
-      const updatedUrl = this.updatedUrl();
-      // try {
-      //   this.bookmarkValidationHandler(updatedUrl);
-      // } catch (error) {
-      //   // keep contenteditable
-      //   // underline red
-      //   // keep saved button enabled
-      // }
-      this.bookmarkEditHandler(this.activeBookmark, updatedUrl);
-    });
+    // TODO: refactor into toggle attributes func.
+    activeTextItem.setAttribute('contenteditable', 'true');
+    activeTextItem.setAttribute('class', 'contenteditable');
+    // make edit button a save button and add event listener
+    if (activeEditButton) {
+      activeEditButton.textContent = 'save';
+      activeEditButton.setAttribute('class', 'save-button');
+    }
+    activeTextItem.focus();
+
+    this.handleEditBlur(activeTextItem, activeEditButton, activeDeleteButton);
   };
 }
 

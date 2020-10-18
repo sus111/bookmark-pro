@@ -10,3 +10,8 @@ export const createElement = (tag, className) => {
 
   return element;
 };
+
+export const returnQueryParameter = (parameter) => {
+  const params = new URLSearchParams(document.location.search);
+  return params.get(parameter);
+};

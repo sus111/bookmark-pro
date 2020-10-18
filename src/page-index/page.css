@@ -2,6 +2,11 @@ form br {
   display: none;
 }
 
+a {
+  text-decoration: none;
+  color: #2c302f;
+}
+
 .add-bookmark {
   padding: 20px;
   text-align: center;
@@ -16,7 +21,7 @@ form br {
 
 .my-bookmarks {
   background-color: #fef7ed;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .my-bookmarks__inner {
@@ -25,6 +30,7 @@ form br {
 
 .error-message {
   color: red;
+  text-transform: uppercase;
 }
 
 .submit-spinner {

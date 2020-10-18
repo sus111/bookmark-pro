@@ -1,7 +1,9 @@
 require('normalize.css/normalize.css');
 require('../css/main.css');
 require('./page.css');
-import { validation, asyncValidation } from '../js/validation';
+import { validation, asyncValidation } from '../js/helpers/validation';
+import { returnQueryParameter } from '../js/helpers/dom';
+import { urlGenerator } from '../js/helpers/urlGenerator';
 import IndexView from './index.view';
 import IndexModel from './index.model';
 
@@ -15,19 +17,13 @@ class IndexController {
     this.view = view;
 
     this.onBookmarkListChanged(this.model.bookmarks);
+    this.bulkAddBookmarks();
 
     this.view.bindAddBookmark(
       this.handleAddBookmark.bind(this),
       this.setFormError.bind(this)
     );
     this.view.bindFocusInput(this.setFormError.bind(this));
-  }
-
-  async handleValidation(bookmarkText, handleError) {
-    return await asyncValidation(
-      bookmarkText,
-      this.handleToggleLoader
-    ).catch((error) => handleError(error));
   }
 
   async handleAddBookmark(bookmarkText) {
@@ -44,9 +40,23 @@ class IndexController {
       return this.setFormError('url cannot be verified');
     }
 
+    this.addBookmark(bookmarkText);
     history.pushState({}, 'results', `results.html?saved-url=${bookmarkText}`);
     location.reload();
   }
+
+  bulkAddBookmarks() {
+    const numberOfBookmarks = returnQueryParameter('bulk-add');
+    if (numberOfBookmarks < 51) {
+      urlGenerator(numberOfBookmarks).forEach((url) => this.addBookmark(url));
+      this.onBookmarkListChanged(this.model.bookmarks);
+    }
+  }
+
+  addBookmark = (bookmarkText) => {
+    debugger;
+    this.model.addBookmark(bookmarkText);
+  };
 
   setFormError = (error) => {
     this.model.setFormError(error, this.renderFormError.bind(this));
@@ -57,7 +67,6 @@ class IndexController {
   };
 
   handleToggleLoader = (showLoader) => {
-    console.log(showLoader);
     this.view.toggerLoader(showLoader);
   };
 
@@ -65,7 +74,6 @@ class IndexController {
     this.view.displayBookmarks(
       bookmarks,
       this.handleDeleteBookmark.bind(this),
-      this.handleValidation.bind(this),
       this.handleEditBookmark.bind(this)
     );
   };

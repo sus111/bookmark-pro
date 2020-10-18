@@ -18,3 +18,7 @@
 ## Linting
 
 This project is using `eslint-config-google` https://github.com/google/eslint-config-google to adhere to Google linting guidelines, in conjunction with ESLint's recommended rule set
+
+## Manual Testing
+
+Use query parameter ?bulk-add={number} at the end of the index url in order to bulk add random bookmarks (unvalidated, max. 50)

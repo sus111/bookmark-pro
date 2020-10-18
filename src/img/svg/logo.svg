@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="181" height="32" viewBox="0 0 181 32">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <text fill="#1A252D" font-family="Palanquin-Bold, Palanquin" font-size="16" font-weight="bold" letter-spacing="2" transform="translate(-80 -22) translate(80 22)">
+                    <tspan x="34" y="21">BOOKMARK PRO</tspan>
+                </text>
+                <g fill="#FF7D69" fill-rule="nonzero">
+                    <path d="M13.143 0H2.857C1.437 0 .286 1.151.286 2.571v20.572c0 .347.209.66.53.792.32.132.689.059.934-.187l5.947-5.947c.08-.08.19-.126.303-.126.114 0 .223.046.303.126l5.947 5.947c.245.246.614.32.935.187.32-.133.53-.445.53-.792V2.57c0-1.42-1.152-2.571-2.572-2.571z" transform="translate(-80 -22) translate(80 22) translate(0 4)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

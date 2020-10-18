@@ -33,23 +33,23 @@ class IndexModel {
     renderError();
   };
 
-  deleteBookmark = (bookmarkDeleted, handler) => {
+  deleteBookmark = (bookmarkDeleted, renderBookmarks) => {
     this.bookmarks = this.bookmarks.filter(
       (bookmark) => bookmark.text !== bookmarkDeleted
     );
     this.setBookmarks(this.bookmarks);
-    handler(this.bookmarks);
+    renderBookmarks(this.bookmarks);
   };
 
   // Map through all bookmarks, and replace the text of the bookmark with the specified id
-  editBookmark = (bookmarkEdited, updatedText, handler) => {
+  editBookmark = (bookmarkEdited, updatedText, renderBookmarks) => {
     this.bookmarks = this.bookmarks.map((bookmark) =>
       bookmark.text === bookmarkEdited.text
         ? { id: bookmark.id, text: updatedText }
         : bookmark
     );
     this.setBookmarks(this.bookmarks);
-    handler(this.bookmarks);
+    renderBookmarks(this.bookmarks);
   };
 }
 
