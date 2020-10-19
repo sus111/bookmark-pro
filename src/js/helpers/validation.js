@@ -8,9 +8,8 @@ export const validation = (url) => {
 };
 
 export const asyncValidation = async (url) => {
-  // using proxy server in local development to get around CORS issue
-  const isDev = process.env.NODE_ENV === 'development';
-  const devUrlPrefix = 'https://cors-anywhere.herokuapp.com/';
+  // using proxy server to get around CORS issue
+  const urlPrefix = 'https://cors-anywhere.herokuapp.com/';
 
   // strip out http:// or https://
   // TODO: put in helper file
@@ -18,9 +17,7 @@ export const asyncValidation = async (url) => {
   let formattedUrl = url;
   formattedUrl = url.match(httpsRegex) ? url.replace(httpsRegex, '') : url;
 
-  const prefixedUrl = isDev
-    ? `${devUrlPrefix}${formattedUrl}`
-    : `//${formattedUrl}`;
+  const prefixedUrl = `${urlPrefix}${formattedUrl}`;
 
   return await fetch(prefixedUrl).then((response) => {
     // if HTTP-status is 200-299

@@ -69,8 +69,7 @@ class IndexController {
     }
 
     this.addBookmark(bookmarkText);
-    history.pushState({}, 'results', `results.html?saved-url=${bookmarkText}`);
-    location.reload();
+    window.location.href = `results?saved-url=${bookmarkText}`;
   }
 
   addBookmark = (bookmarkText) => {
