@@ -6,9 +6,7 @@ class IndexView {
     this.input = document.querySelector('#form-input');
     this.form = document.querySelector('#form-add-bookmark');
 
-    this.listWrapper = document.querySelectorAll(
-      '.my-bookmarks__list-wrapper'
-    )[0];
+    this.listWrapper = document.querySelectorAll('.list-wrapper')[0];
   }
 
   resetInput = () => {

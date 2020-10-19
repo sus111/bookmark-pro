@@ -1,63 +1,115 @@
 .pagination {
-  max-width: 400px;
-  min-width: 300px;
   width: 100%;
-  display: block;
   margin: 0 auto;
-  position: relative;
-  padding: 20px;
 }
 
 .pagination--hide {
   display: none;
 }
 
-.pagination .bookmark-list {
-  min-height: 250px;
-  text-indent: 20px;
-}
-.bookmark-list .bookmark-item {
-  position: relative;
+.bookmark-item {
   background-color: white;
-  color: #2e302f;
+  color: var(--font-color);
+  font-size: 12px;
   padding: 10px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column-reverse;
+  box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid transparent;
+  margin: 8px;
+  padding-bottom: 6px;
+  min-height: 22px;
 }
 
-.bookmark-item .contenteditable {
-  background-color: rgb(228, 223, 176);
+.contenteditable:focus {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid var(--brand-color);
+  margin: 20px 20px 18px;
+}
+
+@media only screen and (min-width: 600px) {
+  .bookmark-item {
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 6px;
+    margin: 13px;
+    min-height: 64px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .contenteditable:focus {
+    margin: 14px 12px 10px;
+  }
+}
+
+.bookmark-text {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+@media only screen and (min-width: 600px) {
+  .bookmark-text {
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    display: flex;
+  }
+}
+
+.bookmark-text a {
+  word-wrap: break-word;
+  min-width: 1%;
+  padding: 12px;
+}
+
+@media only screen and (min-width: 600px) {
+  .bookmark-text a {
+    word-break: break-word;
+    padding: 12px;
+  }
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media only screen and (min-width: 600px) {
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+  }
+}
+
+.pagination-controls {
+  text-align: center;
+  width: 100%;
+  margin: 60px 0;
+}
+
+.pagination-controls span:hover {
+  cursor: pointer;
 }
 
 .page-button {
-  border: 1px solid black;
-  padding: 5px;
+  padding: 0 20px;
 }
+
 .click-page-number {
-  background-color: lightgrey;
-  padding: 5px;
-  margin-left: 2px;
-  margin-right: 2px;
+  color: var(--brand-color);
+  font-size: 36px;
+  margin: 0 12px;
 }
-.pagination-block {
-  text-align: center;
-  width: 100%;
-}
-.pagination-block span {
-  display: inline-block;
-}
-.pagination-block .page-button {
-  background-color: grey;
-  color: white;
-}
-.pagination-block span:hover {
-  cursor: pointer;
-}
+
 .opacity {
   opacity: 0.5;
-}
-.outline-none {
-  outline: none;
-  user-select: none;
 }

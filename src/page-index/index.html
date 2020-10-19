@@ -3,7 +3,7 @@
   <head>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Palanquin"
+      href="https://fonts.googleapis.com/css?family=Palanquin:400,700"
     />
     <title>Bookmark Pro</title>
     <meta charset="UTF-8" />
@@ -16,7 +16,7 @@
     />
   </head>
   <body>
-    <img src="./src/img/svg/logo.svg" class="logo" />
+    <%= require('html-loader!../partials/header/index.html') %>
 
     <section class="add-bookmark">
       <form action="results.html" id="form-add-bookmark">
@@ -24,31 +24,22 @@
           name="saved-url"
           type="text"
           id="form-input"
-          placeholder="Enter url"
+          placeholder="Add a new bookmark"
           value=""
           max="100"
         /><br />
         <button type="submit">
           <p class="submit-text">Add Bookmark</p>
-          <svg class="submit-spinner" viewBox="0 0 20 20">
-            <circle
-              class="path"
-              cx="8"
-              cy="8"
-              r="6"
-              fill="none"
-              stroke-width="2"
-            ></circle>
-          </svg>
+          <img class="submit-spinner" src="src/img/svg/spinner.svg" />
         </button>
       </form>
       <p class="error-message"></p>
     </section>
 
     <section class="my-bookmarks">
-      <div class="my-bookmarks__inner">
-        <h2 class="my-bookmarks__section-title">My Bookmarks</h2>
-        <div class="my-bookmarks__list-wrapper">
+      <div class="my-bookmarks-inner">
+        <h2 class="section-title">My Bookmarks</h2>
+        <div class="list-wrapper">
           <%= require('html-loader!../partials/pagination/index.html') %>
         </div>
       </div>

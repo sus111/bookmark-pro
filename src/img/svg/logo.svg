@@ -1,12 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="181" height="32" viewBox="0 0 181 32">
-    <g fill="none" fill-rule="evenodd">
-        <g>
-            <g>
-                <text fill="#1A252D" font-family="Palanquin-Bold, Palanquin" font-size="16" font-weight="bold" letter-spacing="2" transform="translate(-80 -22) translate(80 22)">
-                    <tspan x="34" y="21">BOOKMARK PRO</tspan>
-                </text>
-                <g fill="#FF7D69" fill-rule="nonzero">
-                    <path d="M13.143 0H2.857C1.437 0 .286 1.151.286 2.571v20.572c0 .347.209.66.53.792.32.132.689.059.934-.187l5.947-5.947c.08-.08.19-.126.303-.126.114 0 .223.046.303.126l5.947 5.947c.245.246.614.32.935.187.32-.133.53-.445.53-.792V2.57c0-1.42-1.152-2.571-2.572-2.571z" transform="translate(-80 -22) translate(80 22) translate(0 4)"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="24px" viewBox="0 0 16 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bookmark---success-Page" transform="translate(-80.000000, -26.000000)" fill="#FF7D69" fill-rule="nonzero">
+            <g id="logo" transform="translate(80.000000, 22.000000)">
+                <g id="streamline-icon-interface-bookmark@24x24" transform="translate(0.000000, 4.000000)">
+                    <path d="M13.1428571,0 L2.85714286,0 C1.43698207,0 0.285714286,1.15126779 0.285714286,2.57142857 L0.285714286,23.1428571 C0.285714286,23.4897031 0.494885631,23.8023181 0.815427438,23.9348138 C1.13596924,24.0673094 1.50476735,23.993567 1.74971429,23.748 L7.69657143,17.8011429 C7.77697508,17.7205357 7.88614806,17.6752339 8,17.6752339 C8.11385194,17.6752339 8.22302492,17.7205357 8.30342857,17.8011429 L14.2502857,23.748 C14.4952327,23.993567 14.8640308,24.0673094 15.1845726,23.9348138 C15.5051144,23.8023181 15.7142857,23.4897031 15.7142857,23.1428571 L15.7142857,2.57142857 C15.7142857,1.15126779 14.5630179,0 13.1428571,0 Z" id="Path"></path>
                 </g>
             </g>
         </g>

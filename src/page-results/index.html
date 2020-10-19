@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Palanquin:400,700"
+    />
     <title>Bookmarked Results</title>
     <meta charset="UTF-8" />
     <meta http-equiv="cache-control" content="no-cache" />
@@ -10,9 +14,18 @@
       name="viewport"
       content="width=device-width,user-scalable=0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"
     />
+    <script src="./src/js/bodymovin.js" type="text/javascript"></script>
   </head>
   <body>
-    <p id="success-text"></p>
-    <a href="/"><p>See all bookmarks</p></a>
+    <%= require('html-loader!../partials/header/index.html') %>
+
+    <div id="#success-animation" class="animation-wrapper"></div>
+    <div class="success-content">
+      <h2>Thanks</h2>
+      <h3>Bookmark Added</h3>
+      <p class="bookmark-added"></p>
+      <p>Has been added to your bookmarks</p>
+      <a href="/" class="home-link"><p>Back to all bookmarks</p></a>
+    </div>
   </body>
 </html>

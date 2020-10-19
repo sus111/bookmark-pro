@@ -26,38 +26,6 @@ class IndexController {
     this.view.bindFocusInput(this.setFormError.bind(this));
   }
 
-  async handleAddBookmark(bookmarkText) {
-    if (!validation(bookmarkText)) {
-      return this.setFormError('please enter url in valid format');
-    }
-    if (this.model.checkForExistingBookmark(bookmarkText)) {
-      return this.setFormError('oops! that bookmark is already in your list');
-    }
-    this.handleToggleLoader({ showLoader: true });
-    const validUrl = await asyncValidation(bookmarkText);
-    this.handleToggleLoader({ showLoader: false });
-    if (!validUrl) {
-      return this.setFormError('url cannot be verified');
-    }
-
-    this.addBookmark(bookmarkText);
-    history.pushState({}, 'results', `results.html?saved-url=${bookmarkText}`);
-    location.reload();
-  }
-
-  bulkAddBookmarks() {
-    const numberOfBookmarks = returnQueryParameter('bulk-add');
-    if (numberOfBookmarks < 51) {
-      urlGenerator(numberOfBookmarks).forEach((url) => this.addBookmark(url));
-      this.onBookmarkListChanged(this.model.bookmarks);
-    }
-  }
-
-  addBookmark = (bookmarkText) => {
-    debugger;
-    this.model.addBookmark(bookmarkText);
-  };
-
   setFormError = (error) => {
     this.model.setFormError(error, this.renderFormError.bind(this));
   };
@@ -85,4 +53,35 @@ class IndexController {
   handleEditBookmark = (bookmark, bookmarkText) => {
     this.model.editBookmark(bookmark, bookmarkText, this.onBookmarkListChanged);
   };
+
+  async handleAddBookmark(bookmarkText) {
+    if (!validation(bookmarkText)) {
+      return this.setFormError('please enter url in valid format');
+    }
+    if (this.model.checkForExistingBookmark(bookmarkText)) {
+      return this.setFormError('oops! that bookmark is already in your list');
+    }
+    this.handleToggleLoader({ showLoader: true });
+    const validUrl = await asyncValidation(bookmarkText);
+    this.handleToggleLoader({ showLoader: false });
+    if (!validUrl) {
+      return this.setFormError('url cannot be verified');
+    }
+
+    this.addBookmark(bookmarkText);
+    history.pushState({}, 'results', `results.html?saved-url=${bookmarkText}`);
+    location.reload();
+  }
+
+  addBookmark = (bookmarkText) => {
+    this.model.addBookmark(bookmarkText);
+  };
+
+  bulkAddBookmarks() {
+    const numberOfBookmarks = returnQueryParameter('bulk-add');
+    if (numberOfBookmarks < 51) {
+      urlGenerator(numberOfBookmarks).forEach((url) => this.addBookmark(url));
+      this.onBookmarkListChanged(this.model.bookmarks);
+    }
+  }
 }

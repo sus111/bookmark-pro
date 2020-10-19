@@ -36,7 +36,7 @@ class Pagination {
     this.prevButton.addEventListener('click', this.handlePreviousPageClick);
     this.nextButton.addEventListener('click', this.handleNextPageClick);
     this.handleNumberClick();
-    // TODO: create func. for these 3:
+    // TODO: create func. for these 2:
     document
       .querySelectorAll('.delete-button')
       .forEach((button) =>
@@ -59,16 +59,9 @@ class Pagination {
   renderCurrentPage = (page) => {
     const bookmarkList = document.querySelectorAll('.bookmark-list')[0];
     bookmarkList.innerHTML = '';
-
-    // if (page < 1) {
-    //   page = 1;
-    // }
-    // if (page > this.returnPagesTotal() - 1) {
-    //   page = this.returnPagesTotal();
-    // }
-
     page < 1 ? 1 : this.returnPagesTotal();
 
+    // TODO: rewrite using forEach
     for (
       var i = (page - 1) * this.itemsPerPage;
       i < page * this.itemsPerPage && i < this.bookmarks.length;
@@ -122,13 +115,13 @@ class Pagination {
 
   renderBookmarkItem = (url, currentIndex, bookmarkId) => `
     <div class='bookmark-item' id="${bookmarkId}">
-      <div id="bookmark-text" contenteditable="false">
+      <span id="bookmark-text" class="bookmark-text" contenteditable="false">
         <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
-      </div>
-      <div>
+      </span>
+      <span class="button-wrapper">
         <span><button class="edit-button" id="${currentIndex}"><img src="./src/img/svg/edit.svg" id="${currentIndex}" /></button></span>
         <span><button class="delete-button" id="${currentIndex}"><img src="./src/img/svg/delete.svg" id="${currentIndex}" /></button></span>
-      </div>
+      </span>
     </div>`;
 
   handlePreviousPageClick = () => {
@@ -179,7 +172,7 @@ class Pagination {
   handleEditBlur = (activeTextItem, activeEditButton, activeDeleteButton) => {
     activeTextItem.addEventListener('blur', (event) => {
       // TODO: refactor all repeated code from handleEditClick
-      //check it's not save button click
+      // check targetsToIgnore
 
       const targetsToIgnore = ['save-button', 'edit-button', 'delete-button'];
       if (!targetsToIgnore.includes(event.target.class)) {
