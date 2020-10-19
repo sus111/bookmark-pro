@@ -9,7 +9,7 @@
     "random-words": "^1.1.1"
   },
   "scripts": {
-    "start": "http-server dist/index.html",
+    "start": "http-server dist",
     "build": "webpack --config webpack.prod.js --mode production",
     "lint:fix": "eslint --fix  --ext .js .",
     "heroku-cleanup": "npm install --only-dev"
