@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const buildPath = path.resolve(__dirname, 'dist');
+const buildPath = path.resolve(__dirname, 'public');
 
 module.exports = {
   // https://webpack.js.org/configuration/devtool/

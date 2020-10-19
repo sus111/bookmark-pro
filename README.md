@@ -12,7 +12,7 @@
 
 ## Production
 
-- `npm run build` to prepare `html`, `css`, `js` files in `dist/` directory
+- `npm run build` to prepare `html`, `css`, `js` files in `public/` directory
 - `npm run preview` - run build and serve production files locally
 
 ## Linting
