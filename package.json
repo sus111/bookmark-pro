@@ -5,6 +5,7 @@
   "repository": "https://github.com/sus111/bookmarked",
   "author": "<sgraham535@gmail.com>",
   "dependencies": {
+    "lottie-web": "^5.7.3",
     "normalize.css": "^8.0.1",
     "random-words": "^1.1.1",
     "serve": "^11.3.2"
