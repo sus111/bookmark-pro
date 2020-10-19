@@ -119,8 +119,8 @@ class Pagination {
         <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
       </span>
       <span class="button-wrapper">
-        <span><button class="edit-button" id="${currentIndex}"><img src="./src/img/svg/edit.svg" id="${currentIndex}" /></button></span>
-        <span><button class="delete-button" id="${currentIndex}"><img src="./src/img/svg/delete.svg" id="${currentIndex}" /></button></span>
+        <span><button class="edit-button" id="${currentIndex}"><img src="/src/img/svg/edit.svg" id="${currentIndex}" /></button></span>
+        <span><button class="delete-button" id="${currentIndex}"><img src="/src/img/svg/delete.svg" id="${currentIndex}" /></button></span>
       </span>
     </div>`;
 

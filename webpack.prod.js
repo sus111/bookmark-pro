@@ -21,7 +21,6 @@ module.exports = {
   // how to write the compiled files to disk
   // https://webpack.js.org/concepts/output/
   output: {
-    filename: '[name].[hash:20].js',
     path: buildPath,
   },
 

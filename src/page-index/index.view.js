@@ -15,19 +15,11 @@ class IndexView {
 
   displayBookmarks = (bookmarks, deleteHandler, editHandler) => {
     if (bookmarks.length === 0) {
-      // remove pagination component from DOM
-      const bookmarkList = document.querySelector('.pagination');
-      if (bookmarkList) {
-        bookmarkList.remove();
-      }
-
-      // render no bookmarks messaging
-      const h3 = (createElement('h3').textContent = 'No bookmarks');
-      const p = createElement('p');
-      p.textContent =
-        'Any new bookmarks you add will appear here \n What are you waiting for?! Get adding';
-      this.listWrapper.append(h3);
-      this.listWrapper.append(p);
+      this.listWrapper.innerHTML = `
+        <h3>No bookmarks</h3>
+        <p>Any new bookmarks you add will appear here</p>
+        <p>What are you waiting for?! Get adding</p>
+      `;
     } else {
       new Pagination(bookmarks, deleteHandler, editHandler);
     }
