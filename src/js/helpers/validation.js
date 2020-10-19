@@ -16,7 +16,7 @@ export const asyncValidation = async (url) => {
   // TODO: put in helper file
   const httpsRegex = /^https?:\/\//;
   let formattedUrl = url;
-  formattedUrl = url.match(httpsRegex) && url.replace(httpsRegex, '');
+  formattedUrl = url.match(httpsRegex) ? url.replace(httpsRegex, '') : url;
 
   const prefixedUrl = isDev
     ? `${devUrlPrefix}${formattedUrl}`
