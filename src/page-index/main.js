@@ -69,7 +69,11 @@ class IndexController {
     }
 
     this.addBookmark(bookmarkText);
-    window.location.href = `results?saved-url=${bookmarkText}`;
+    // TODO: fix
+    const devSuffix = process.env === 'development' ? '.html' : '';
+
+    window.location.href = `results.html?saved-url=${bookmarkText}`;
+    // window.location.href = `results?saved-url=${bookmarkText}`;
   }
 
   addBookmark = (bookmarkText) => {

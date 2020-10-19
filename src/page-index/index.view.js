@@ -1,5 +1,6 @@
 import Pagination from '../partials/pagination/main';
-import { createElement, getElementByClass } from '../js/helpers/dom';
+import { getElementByClass } from '../js/helpers/dom';
+import spinnerSvg from '../img/svg/spinner.svg';
 
 class IndexView {
   constructor() {
@@ -52,6 +53,7 @@ class IndexView {
     const text = getElementByClass('.submit-text');
 
     if (showLoader) {
+      spinner.setAttribute('src', `${spinnerSvg}`);
       spinner.setAttribute('style', 'display: block;');
       text.setAttribute('style', 'display: none;');
     } else {

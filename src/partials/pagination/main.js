@@ -3,6 +3,8 @@ require('./main.css');
 import { parsedBookmarksFromLocalStorage } from '../../js/helpers/localStorage';
 import { getElementById } from '../../js/helpers/dom';
 import { validation } from '../../js/helpers/validation';
+import editSvg from '../../img/svg/edit.svg';
+import deleteSvg from '../../img/svg/delete.svg';
 
 class Pagination {
   constructor(bookmarks, deleteHandler, editHandler) {
@@ -119,8 +121,8 @@ class Pagination {
         <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
       </span>
       <span class="button-wrapper">
-        <span><button class="edit-button" id="${currentIndex}"><img src="/src/img/svg/edit.svg" id="${currentIndex}" /></button></span>
-        <span><button class="delete-button" id="${currentIndex}"><img src="/src/img/svg/delete.svg" id="${currentIndex}" /></button></span>
+        <span><button class="edit-button" id="${currentIndex}"><img src=${editSvg} id="${currentIndex}" /></button></span>
+        <span><button class="delete-button" id="${currentIndex}"><img src=${deleteSvg} id="${currentIndex}" /></button></span>
       </span>
     </div>`;
 
