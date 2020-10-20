@@ -29,6 +29,21 @@ export const createElement = (elementType, className) => {
 };
 
 /**
+ * addClickHandlerMulipleElements - render pagination component in DOM
+ * @function
+ * @param {string} querySelector
+ * @param {function} handler
+ * @return {void}
+ */
+export const addClickHandlerMulipleElements = (querySelector, handler) => {
+  document
+  .querySelectorAll(querySelector)
+  .forEach((element) =>
+    element.addEventListener('click', (event) => handler(event))
+  );
+};
+
+/**
  * returnQueryParameter - return passed in query parameter
  * @function
  * @param {string} parameter

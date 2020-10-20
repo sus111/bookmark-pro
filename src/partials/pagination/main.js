@@ -1,7 +1,10 @@
 require('../../css/main.css');
 require('./main.css');
 import { parsedBookmarksFromLocalStorage } from '../../js/helpers/localStorage';
-import { getElementById, getElementBySelector } from '../../js/helpers/dom';
+import {
+  getElementById,
+  getElementBySelector,
+  addClickHandlerMulipleElements } from '../../js/helpers/dom';
 import { validation } from '../../js/helpers/validation';
 import editSvg from '../../img/svg/edit.svg';
 import deleteSvg from '../../img/svg/delete.svg';
@@ -64,22 +67,15 @@ class Pagination {
    * @return {void}
    */
   addEventListeners = () => {
-    this.prevButton.addEventListener('click', this.handlePreviousPageClick);
-    this.nextButton.addEventListener('click', this.handleNextPageClick);
+    this.prevButton.addEventListener('click', this.handleIncrementPageClick);
+    this.nextButton.addEventListener('click', this.handleDecrementPageClick);
     this.handleNumberClick();
-    // TODO: create func. for these 2:
-    document
-      .querySelectorAll('.delete-button')
-      .forEach((button) =>
-        button.addEventListener('click', (event) =>
-          this.handleDeleteClick(event)
-        )
-      );
-    document
-      .querySelectorAll('.edit-button')
-      .forEach((button) =>
-        button.addEventListener('click', (event) => this.handleEditClick(event))
-      );
+
+    addClickHandlerMulipleElements('.edit-button', this.handleEditClick);
+    addClickHandlerMulipleElements(
+      '.delete-button',
+      this.handleDeleteClick
+    );
   };
 
   /**
@@ -108,16 +104,15 @@ class Pagination {
     bookmarkList.innerHTML = '';
     page < 1 ? 1 : this.returnPagesTotal();
 
-    // TODO: rewrite using forEach
     for (
-      let i = (page - 1) * this.itemsPerPage;
-      i < page * this.itemsPerPage && i < this.bookmarks.length;
-      i++
+      let index = (page - 1) * this.itemsPerPage;
+      index < page * this.itemsPerPage && index < this.bookmarks.length;
+      index++
     ) {
       bookmarkList.innerHTML += this.renderBookmarkItem(
-        this.bookmarks[i].text,
-        i,
-        this.bookmarks[i].id
+        this.bookmarks[index].text,
+        index,
+        this.bookmarks[index].id
       );
     }
 
@@ -150,14 +145,15 @@ class Pagination {
     const pageNumber = document
       .getElementById('page-number')
       .getElementsByClassName('click-page-number');
+    const pageNumberTotal = pageNumber.length;
 
-    for (let i = 0; i < pageNumber.length; i++) {
-      if (i == this.currentPage - 1) {
-        pageNumber[i].style.opacity = '1.0';
+    [...Array(pageNumberTotal)].forEach((item, index) => {
+      if (index == this.currentPage - 1) {
+        pageNumber[index].style.opacity = '1.0';
       } else {
-        pageNumber[i].style.opacity = '0.5';
+        pageNumber[index].style.opacity = '0.5';
       }
-    }
+    });
   };
 
   /**
@@ -199,11 +195,11 @@ class Pagination {
     </div>`;
 
   /**
-   * handlePreviousPageClick
+   * handleIncrementPageClick
    * @function
    * @return {void}
    */
-  handlePreviousPageClick = () => {
+  handleIncrementPageClick = () => {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.renderCurrentPage(this.currentPage);
@@ -211,11 +207,11 @@ class Pagination {
   };
 
   /**
-   * handleNextPageClick
+   * handleDecrementPageClick
    * @function
    * @return {void}
    */
-  handleNextPageClick = () => {
+  handleDecrementPageClick = () => {
     if (this.currentPage < this.returnPagesTotal()) {
       this.currentPage++;
       this.renderCurrentPage(this.currentPage);
@@ -237,7 +233,7 @@ class Pagination {
   };
 
   /**
-   * setActiveListItem
+   * setActiveListItem - set this.activeListItem from button click
    * @function
    * @param {number} buttonIndex
    * @return {void}
@@ -249,9 +245,9 @@ class Pagination {
   };
 
   /**
-   * updatedUrl
+   * updatedUrl - return updated url from text element
    * @function
-   * @return {void}
+   * @return {string} updatedUrl
    */
   updatedUrl = () => this.activeListItem.children[0].textContent.trim();
 
@@ -285,34 +281,21 @@ class Pagination {
   /**
    * handleEditBlur - save updated text on blur
    * @function
-   * @param {string} activeTextItem
-   * @param {HTMLElement} activeEditButton
-   * @param {HTMLElement} activeDeleteButton
+   * @param {HTMLElement} activeTextItem
    * @return {void}
    */
-  handleEditBlur = (activeTextItem, activeEditButton, activeDeleteButton) => {
-    activeTextItem.addEventListener('blur', (event) => {
-      // TODO: refactor all repeated code from handleEditClick
-      // check targetsToIgnore
+  handleEditBlur = (activeTextItem) => {
+    activeTextItem.addEventListener('blur', () => {
+      const urlMatchesPattern = validation(activeTextItem.textContent);
 
-      const targetsToIgnore = ['save-button', 'edit-button', 'delete-button'];
-      if (!targetsToIgnore.includes(event.target.class)) {
-        const urlMatchesPattern = validation(activeTextItem.textContent);
-
-        if (urlMatchesPattern) {
-          activeTextItem.removeAttribute('contenteditable', 'true');
-          activeTextItem.removeAttribute('class', 'contenteditable');
-          activeEditButton.setAttribute('class', 'edit-button');
-          activeDeleteButton.disabled = false;
-
-          this.bookmarkEditHandler(this.activeBookmark, this.updatedUrl());
-        }
+      if (urlMatchesPattern) {
+        this.bookmarkEditHandler(this.activeBookmark, this.updatedUrl());
       }
     });
   };
 
   /**
-   * handleEditClick - make UI updates and add event listener
+   * handleEditClick - make UI updates and add onblur event listener
    * @function
    * @param {event} event
    * @return {void}
@@ -330,19 +313,19 @@ class Pagination {
     const activeDeleteButton = this.activeListItem.querySelector(
       '.delete-button'
     );
-    activeDeleteButton.disabled = true;
 
-    // TODO: refactor into toggle attributes func.
-    activeTextItem.setAttribute('contenteditable', 'true');
-    activeTextItem.setAttribute('class', 'contenteditable');
+    // UI updates to edit & delete buttons and text element
+    activeDeleteButton.disabled = true;
     // make edit button a save button and add event listener
     if (activeEditButton) {
       activeEditButton.textContent = 'save';
       activeEditButton.setAttribute('class', 'save-button');
     }
+    activeTextItem.setAttribute('contenteditable', 'true');
+    activeTextItem.setAttribute('class', 'contenteditable');
     activeTextItem.focus();
 
-    this.handleEditBlur(activeTextItem, activeEditButton, activeDeleteButton);
+    this.handleEditBlur(activeTextItem);
   };
 }
 
