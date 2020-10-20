@@ -1,16 +1,16 @@
 import 'regenerator-runtime/runtime';
 
 /**
- * validation - validate if paseed url is valid
+ * urlValidation - validate if paseed url is valid
  * @function
  * @param {string} url
  * @return {boolean}
  */
-export const validation = (url) => {
+export const urlValidation = (url) => {
   /* eslint-disable */
   const urlRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
   /* eslint-enable */
-  return url.match(urlRegex);
+  return !!url.match(urlRegex);
 };
 
 /**
@@ -20,7 +20,8 @@ export const validation = (url) => {
  * @return {boolean}
  */
 export const asyncValidation = async (url) => {
-  // using proxy server to get around CORS issue
+  // HACK: using proxy server to get around CORS issue
+  // TODO: come up with better workaround
   const urlPrefix = 'https://cors-anywhere.herokuapp.com/';
 
   // strip out http:// or https://

@@ -5,7 +5,7 @@ import {
   getElementById,
   getElementBySelector,
   addClickHandlerMulipleElements } from '../../js/helpers/dom';
-import { validation } from '../../js/helpers/validation';
+import { urlValidation } from '../../js/helpers/validation';
 import editSvg from '../../img/svg/edit.svg';
 import deleteSvg from '../../img/svg/delete.svg';
 
@@ -286,7 +286,7 @@ class Pagination {
    */
   handleEditBlur = (activeTextItem) => {
     activeTextItem.addEventListener('blur', () => {
-      const urlMatchesPattern = validation(activeTextItem.textContent);
+      const urlMatchesPattern = urlValidation(activeTextItem.textContent);
 
       if (urlMatchesPattern) {
         this.bookmarkEditHandler(this.activeBookmark, this.updatedUrl());
