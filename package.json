@@ -14,8 +14,7 @@
     "dev": "webpack-dev-server --config webpack.dev.js --mode development",
     "build": "webpack --config webpack.prod.js --mode production",
     "start": "serve ./public",
-    "lint:fix": "eslint --fix  --ext .js .",
-    "postinstall": "npm run build"
+    "lint:fix": "eslint --fix  --ext .js ."
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
