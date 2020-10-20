@@ -1,19 +1,38 @@
 import Pagination from '../partials/pagination/main';
-import { getElementByClass } from '../js/helpers/dom';
+import { getElementBySelector } from '../js/helpers/dom';
 import spinnerSvg from '../img/svg/spinner.svg';
 
+/**
+ * IndexView
+ * @class
+ */
 class IndexView {
+  /**
+   * @constructor
+   * @return {void}
+   */
   constructor() {
-    this.input = document.querySelector('#form-input');
-    this.form = document.querySelector('#form-add-bookmark');
+    this.input = getElementBySelector('#form-input');
+    this.form = getElementBySelector('#form-add-bookmark');
 
-    this.listWrapper = document.querySelectorAll('.list-wrapper')[0];
+    this.listWrapper = getElementBySelector('.list-wrapper');
   }
 
-  resetInput = () => {
-    this.input.value = '';
-  };
+  /**
+   * resetInput
+   * @function
+   * @return {void}
+   */
+  resetInput = () => (this.input.value = '');
 
+  /**
+   * displayBookmarks - render my bookmarks content
+   * @function
+   * @param {array} bookmarks
+   * @param {function} deleteHandler
+   * @param {function} editHandler
+   * @return {void}
+   */
   displayBookmarks = (bookmarks, deleteHandler, editHandler) => {
     if (bookmarks.length === 0) {
       this.listWrapper.innerHTML = `
@@ -26,17 +45,36 @@ class IndexView {
     }
   };
 
+  /**
+   * renderErrorMessage - set error message in error element
+   * @function
+   * @param {string} error
+   * @return {void}
+   */
   renderErrorMessage = (error) => {
-    const errorTag = document.querySelector('.error-message');
+    const errorTag = getElementBySelector('.error-message');
     errorTag.textContent = error;
   };
 
+  /**
+   * bindFocusInput - reset error on focus of input element
+   * @function
+   * @param {function} setErrorHandler
+   * @return {void}
+   */
   bindFocusInput = (setErrorHandler) => {
     this.input.addEventListener('focus', () => {
       setErrorHandler('');
     });
   };
 
+  /**
+   * bindAddBookmark - handle form submission
+   * @function
+   * @param {function} addBookmarkHandler
+   * @param {function} setErrorHandler
+   * @return {void}
+   */
   bindAddBookmark = (addBookmarkHandler, setErrorHandler) => {
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -48,9 +86,34 @@ class IndexView {
     });
   };
 
+  /**
+   * bindFormValidationError - handle invalid form input
+   * @function
+   * @param {function} setError
+   * @param {function} toggleLoader
+   * @return {void}
+   */
+  bindFormValidationError(setError, toggleLoader) {
+    this.form.addEventListener(
+      'invalid',
+      function(e) {
+        e.preventDefault();
+        toggleLoader({ showLoader: false });
+        setError('Please enter url in valid format');
+      },
+      true
+    );
+  }
+
+  /**
+   * toggerLoader - render / hide loading spinner
+   * @function
+   * @param {function} showLoader
+   * @return {void}
+   */
   toggerLoader = ({ showLoader }) => {
-    const spinner = getElementByClass('.submit-spinner');
-    const text = getElementByClass('.submit-text');
+    const spinner = getElementBySelector('.submit-spinner');
+    const text = getElementBySelector('.submit-text');
 
     if (showLoader) {
       spinner.setAttribute('src', `${spinnerSvg}`);

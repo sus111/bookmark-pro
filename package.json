@@ -11,16 +11,18 @@
     "serve": "^11.3.2"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.js --mode development",
-    "build": "webpack --config webpack.prod.js --mode production",
-    "start": "serve ./public",
-    "lint:fix": "eslint --fix  --ext .js ."
+    "lint": "eslint --ext .js .",
+    "lint:fix": "eslint --fix  --ext .js .",
+    "dev": "npm run lint && webpack-dev-server --config webpack.dev.js --mode development",
+    "build": "npm run lint && webpack --config webpack.prod.js --mode production",
+    "start": "serve ./public"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.11.5",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.3.0",
@@ -31,7 +33,6 @@
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "regenerator-runtime": "^0.13.7",
     "standard": "^14.3.4",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",

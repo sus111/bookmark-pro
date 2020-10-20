@@ -1,32 +1,56 @@
 require('../../css/main.css');
 require('./main.css');
 import { parsedBookmarksFromLocalStorage } from '../../js/helpers/localStorage';
-import { getElementById } from '../../js/helpers/dom';
+import { getElementById, getElementBySelector } from '../../js/helpers/dom';
 import { validation } from '../../js/helpers/validation';
 import editSvg from '../../img/svg/edit.svg';
 import deleteSvg from '../../img/svg/delete.svg';
 
+/**
+ * Pagination UI component
+ * @class
+ */
 class Pagination {
+  /**
+   * @constructor
+   * @param {array} bookmarks saved bookmarks
+   * @param {function} deleteHandler
+   * @param {function} editHandler
+   * @return {void}
+   */
   constructor(bookmarks, deleteHandler, editHandler) {
     this.deleteBookmarkHandler = deleteHandler;
     this.bookmarkEditHandler = editHandler;
     this.bookmarks = bookmarks;
-    this.paginationComponent = document.querySelectorAll('.pagination');
+
+    this.paginationComponent = getElementBySelector('.pagination');
     this.prevButton = getElementById('button-prev');
     this.nextButton = getElementById('button-next');
 
+    // set state
     this.currentPage = 1;
     this.itemsPerPage = 20;
     this.activeBookmark;
     this.activeListItem;
+
     this.init();
   }
 
+  /**
+   * init - initialise pagination UI
+   * @function
+   * @return {void}
+   */
   init = () => {
     this.setupPaginationComponent();
     this.addEventListeners();
   };
 
+  /**
+   * setupPaginationComponent - render pagination elements
+   * @function
+   * @return {void}
+   */
   setupPaginationComponent = () => {
     this.showPagination();
     this.renderCurrentPage(1);
@@ -34,6 +58,11 @@ class Pagination {
     this.updateNumberButtonOpacity();
   };
 
+  /**
+   * addEventListeners
+   * @function
+   * @return {void}
+   */
   addEventListeners = () => {
     this.prevButton.addEventListener('click', this.handlePreviousPageClick);
     this.nextButton.addEventListener('click', this.handleNextPageClick);
@@ -53,19 +82,35 @@ class Pagination {
       );
   };
 
+  /**
+   * showPagination - render pagination component in DOM
+   * @function
+   * @return {void}
+   */
   showPagination = () =>
-    this.paginationComponent[0].classList.remove('pagination--hide');
+    this.paginationComponent.classList.remove('pagination--hide');
 
+  /**
+   * returnPagesTotal
+   * @function
+   * @return {number} pages total
+   */
   returnPagesTotal = () => Math.ceil(this.bookmarks.length / this.itemsPerPage);
 
+  /**
+   * renderCurrentPage
+   * @function
+   * @param {number} page current page
+   * @return {void}
+   */
   renderCurrentPage = (page) => {
-    const bookmarkList = document.querySelectorAll('.bookmark-list')[0];
+    const bookmarkList = getElementBySelector('.bookmark-list');
     bookmarkList.innerHTML = '';
     page < 1 ? 1 : this.returnPagesTotal();
 
     // TODO: rewrite using forEach
     for (
-      var i = (page - 1) * this.itemsPerPage;
+      let i = (page - 1) * this.itemsPerPage;
       i < page * this.itemsPerPage && i < this.bookmarks.length;
       i++
     ) {
@@ -80,8 +125,13 @@ class Pagination {
     this.updateNumberButtonOpacity();
   };
 
+  /**
+   * renderPageButtons
+   * @function
+   * @return {void}
+   */
   renderPageButtons = () => {
-    let pageNumber = document.getElementById('page-number');
+    const pageNumber = getElementById('page-number');
     pageNumber.innerHTML = '';
 
     [...Array(this.returnPagesTotal())].forEach((item, index) => {
@@ -91,8 +141,13 @@ class Pagination {
     });
   };
 
+  /**
+   * updateNumberButtonOpacity
+   * @function
+   * @return {void}
+   */
   updateNumberButtonOpacity = () => {
-    let pageNumber = document
+    const pageNumber = document
       .getElementById('page-number')
       .getElementsByClassName('click-page-number');
 
@@ -105,6 +160,11 @@ class Pagination {
     }
   };
 
+  /**
+   * updateChevronButtonsOpacity
+   * @function
+   * @return {void}
+   */
   updateChevronButtonsOpacity = () => {
     this.currentPage == 1
       ? this.prevButton.classList.add('opacity')
@@ -115,17 +175,34 @@ class Pagination {
       : this.nextButton.classList.remove('opacity');
   };
 
+  /**
+   * renderBookmarkItem
+   * @function
+   * @param {string} url
+   * @param {number} currentIndex
+   * @param {number} bookmarkId
+   * @return {string}
+   */
   renderBookmarkItem = (url, currentIndex, bookmarkId) => `
     <div class='bookmark-item' id="${bookmarkId}">
       <span id="bookmark-text" class="bookmark-text" contenteditable="false">
         <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
       </span>
       <span class="button-wrapper">
-        <span><button class="edit-button" id="${currentIndex}"><img src=${editSvg} id="${currentIndex}" /></button></span>
-        <span><button class="delete-button" id="${currentIndex}"><img src=${deleteSvg} id="${currentIndex}" /></button></span>
+        <span><button class="edit-button" id="${currentIndex}">
+          <img src=${editSvg} id="${currentIndex}" />
+        </button></span>
+        <span><button class="delete-button" id="${currentIndex}">
+          <img src=${deleteSvg} id="${currentIndex}" />
+        </button></span>
       </span>
     </div>`;
 
+  /**
+   * handlePreviousPageClick
+   * @function
+   * @return {void}
+   */
   handlePreviousPageClick = () => {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -133,6 +210,11 @@ class Pagination {
     }
   };
 
+  /**
+   * handleNextPageClick
+   * @function
+   * @return {void}
+   */
   handleNextPageClick = () => {
     if (this.currentPage < this.returnPagesTotal()) {
       this.currentPage++;
@@ -140,8 +222,13 @@ class Pagination {
     }
   };
 
+  /**
+   * handleNumberClick
+   * @function
+   * @return {void}
+   */
   handleNumberClick = () => {
-    const pageNumber = document.getElementById('page-number');
+    const pageNumber = getElementById('page-number');
 
     pageNumber.addEventListener('click', (event) => {
       this.currentPage = event.target.textContent;
@@ -149,20 +236,44 @@ class Pagination {
     });
   };
 
+  /**
+   * setActiveListItem
+   * @function
+   * @param {number} buttonIndex
+   * @return {void}
+   */
   setActiveListItem = (buttonIndex) => {
     this.activeListItem = document.querySelectorAll('.bookmark-item')[
       buttonIndex
     ];
   };
 
+  /**
+   * updatedUrl
+   * @function
+   * @return {void}
+   */
   updatedUrl = () => this.activeListItem.children[0].textContent.trim();
 
+  /**
+   * handleDeleteClick
+   * @function
+   * @param {Event} event
+   * @return {void}
+   */
   handleDeleteClick = (event) => {
     const buttonIndex = parseInt(event.target.id);
     this.setActiveListItem(buttonIndex);
     this.deleteBookmarkHandler(this.updatedUrl());
   };
 
+  /**
+   * setActiveBookmark - set this.activeBookmark with bookmark from
+   * local storage
+   * @function
+   * @param {number} buttonIndex
+   * @return {void}
+   */
   setActiveBookmark = (buttonIndex) => {
     const bookmarkItems = document.querySelectorAll('.bookmark-item');
     const bookmarkId = bookmarkItems[buttonIndex].id;
@@ -171,6 +282,14 @@ class Pagination {
     )[0];
   };
 
+  /**
+   * handleEditBlur - save updated text on blur
+   * @function
+   * @param {string} activeTextItem
+   * @param {HTMLElement} activeEditButton
+   * @param {HTMLElement} activeDeleteButton
+   * @return {void}
+   */
   handleEditBlur = (activeTextItem, activeEditButton, activeDeleteButton) => {
     activeTextItem.addEventListener('blur', (event) => {
       // TODO: refactor all repeated code from handleEditClick
@@ -192,6 +311,12 @@ class Pagination {
     });
   };
 
+  /**
+   * handleEditClick - make UI updates and add event listener
+   * @function
+   * @param {event} event
+   * @return {void}
+   */
   handleEditClick = (event) => {
     const buttonIndex = parseInt(event.target.id);
     this.setActiveBookmark(buttonIndex);
@@ -199,12 +324,12 @@ class Pagination {
 
     // make text content editable
     const activeTextItem = this.activeListItem.children[0];
-    const activeEditButton = this.activeListItem.querySelectorAll(
+    const activeEditButton = this.activeListItem.querySelector(
       '.edit-button'
-    )[0];
-    const activeDeleteButton = this.activeListItem.querySelectorAll(
+    );
+    const activeDeleteButton = this.activeListItem.querySelector(
       '.delete-button'
-    )[0];
+    );
     activeDeleteButton.disabled = true;
 
     // TODO: refactor into toggle attributes func.
