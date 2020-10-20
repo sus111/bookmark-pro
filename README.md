@@ -4,7 +4,7 @@ Bookmark your favourite websites like a pro 💃🏻
 
 ## View live: **https://secure-badlands-98686.herokuapp.com/**
 
-This app is build in (plain html/css/javascript), compiled with Babel and assembled with webpack. It makes use of native technologies wherever possible (no JQuery! and no frameworks), uses html form validation and animated svgs.
+This app is build in (plain html/css/javascript), compiled with Babel and assembled with webpack. It makes use of native technologies wherever possible (no JQuery! and no frameworks), uses html form validation and animated svgs. It is using MVC (model, view, controller) architecture.
 
 ## Prerequisites
 
@@ -38,3 +38,9 @@ This project is hosted with Heroku, deploy by doing the following:
 - `heroku create` if deploying for first time, create empty app on Heroku
 - `git push heroku master` to update the build from master, or prefix master with another branch name to deploy code from another branch `git push heroku deploy:master`
 - view build logs with `heroku logs --tail`
+
+## Updates needed
+- Links saved with http:// or https:// prefixes don’t work when you click from list. The colon is being stripped out by the browser, so this character needs to be encoded correctly
+- When edit update fails validation, needs to be handled better in the UI
+- Bulk adding urls doesn’t update UI when there are no bookmarks
+- Enable saving after editing link using enter key up down event

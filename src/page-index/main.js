@@ -4,6 +4,7 @@ require('./page.css');
 import { isDev } from '../js/helpers/environment';
 import { returnQueryParameter } from '../js/helpers/dom';
 import { urlGenerator } from '../js/helpers/urlGenerator';
+import { asyncValidation } from '../js/helpers/validation';
 import IndexView from './index.view';
 import IndexModel from './index.model';
 
@@ -38,7 +39,6 @@ class IndexController {
     this.view.bindFocusInput(this.setFormError.bind(this));
     this.view.bindFormValidationError(
       this.setFormError.bind(this),
-      this.handleToggleLoader.bind(this)
     );
   }
 
@@ -103,26 +103,30 @@ class IndexController {
    * addBookmark - call model to add bookmark and push user to results page
    * @function
    * @param {string} bookmarkText
-   * @param {boolean} hasRedirect - redirect to results page
+   * @param {boolean} isBulkAdd - no async validation or redirect
    * @return {void}
    */
-  addBookmark = (bookmarkText, hasRedirect = true) => {
-    this.handleToggleLoader({ showLoader: true });
-
+  async addBookmark(bookmarkText, isBulkAdd = false) {
     if (this.model.checkForExistingBookmark(bookmarkText)) {
-      this.handleToggleLoader({ showLoader: false });
       return this.setFormError('oops! that bookmark is already in your list');
+    }
+
+    if (!isBulkAdd) {
+      this.handleToggleLoader({ showLoader: true });
+      const validUrl = await asyncValidation(bookmarkText);
+      this.handleToggleLoader({ showLoader: false });
+      if (!validUrl) {
+        return this.setFormError('url cannot be verified');
+      }
     }
 
     this.model.addBookmark(bookmarkText);
 
-    this.handleToggleLoader({ showLoader: false });
-
     const devSuffix = isDev() ? '.html' : '';
-    if (hasRedirect) {
+    if (!isBulkAdd) {
       window.location.href = `results${devSuffix}?saved-url=${bookmarkText}`;
     }
-  };
+  }
 
   /**
    * bulkAddBookmarks - call model to add bookmarks and view to render updated
@@ -134,7 +138,7 @@ class IndexController {
     const numberOfBookmarks = returnQueryParameter('bulk-add');
     if (numberOfBookmarks < 51) {
       urlGenerator(numberOfBookmarks).forEach((url) => this.addBookmark(url,
-        false));
+        true));
       this.onBookmarkListChanged(this.model.bookmarks);
     }
   }

@@ -90,15 +90,13 @@ class IndexView {
    * bindFormValidationError - handle invalid form input
    * @function
    * @param {function} setError
-   * @param {function} toggleLoader
    * @return {void}
    */
-  bindFormValidationError(setError, toggleLoader) {
+  bindFormValidationError(setError) {
     this.form.addEventListener(
       'invalid',
       function(e) {
         e.preventDefault();
-        toggleLoader({ showLoader: false });
         setError('Please enter url in valid format');
       },
       true
