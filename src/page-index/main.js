@@ -37,9 +37,7 @@ class IndexController {
       this.setFormError.bind(this)
     );
     this.view.bindFocusInput(this.setFormError.bind(this));
-    this.view.bindFormValidationError(
-      this.setFormError.bind(this),
-    );
+    this.view.bindFormValidationError(this.setFormError.bind(this));
   }
 
   /**
@@ -108,6 +106,7 @@ class IndexController {
    */
   async addBookmark(bookmarkText, isBulkAdd = false) {
     if (this.model.checkForExistingBookmark(bookmarkText)) {
+      this.handleToggleLoader({ showLoader: false });
       return this.setFormError('oops! that bookmark is already in your list');
     }
 
@@ -137,9 +136,10 @@ class IndexController {
   bulkAddBookmarks = () => {
     const numberOfBookmarks = returnQueryParameter('bulk-add');
     if (numberOfBookmarks < 51) {
-      urlGenerator(numberOfBookmarks).forEach((url) => this.addBookmark(url,
-        true));
+      urlGenerator(numberOfBookmarks).forEach((url) =>
+        this.addBookmark(url, true)
+      );
       this.onBookmarkListChanged(this.model.bookmarks);
     }
-  }
+  };
 }

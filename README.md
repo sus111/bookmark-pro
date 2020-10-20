@@ -40,6 +40,7 @@ This project is hosted with Heroku, deploy by doing the following:
 - view build logs with `heroku logs --tail`
 
 ## Updates needed
+
 - Links saved with http:// or https:// prefixes don’t work when you click from list. The colon is being stripped out by the browser, so this character needs to be encoded correctly
 - When edit update fails validation, needs to be handled better in the UI
 - Bulk adding urls doesn’t update UI when there are no bookmarks
