@@ -58,6 +58,10 @@ header {
   background: white;
 }
 
+header a {
+  display: flex;
+}
+
 header h1 {
   text-transform: uppercase;
   font-size: 12px;

@@ -1,18 +1,22 @@
 require('normalize.css/normalize.css');
 require('../css/main.css');
 require('./page.css');
-import { returnQueryParameter } from '../js/helpers/dom';
+import lottie from 'lottie-web';
+import {
+  returnQueryParameter,
+  getElementById,
+  getElementBySelector} from '../js/helpers/dom';
 import animation from '../img/animation/success';
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedUrl = returnQueryParameter('saved-url');
-  document.querySelector('.bookmark-added').innerHTML += savedUrl;
+  getElementBySelector('.bookmark-added').innerHTML += savedUrl;
 
-  bodymovin.loadAnimation({
-    container: document.getElementById('#success-animation'),
+  lottie.loadAnimation({
+    container: getElementById('#success-animation'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: animation,
+    animationData: animation,
   });
 });

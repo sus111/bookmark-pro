@@ -27,10 +27,12 @@
           placeholder="Add a new bookmark"
           value=""
           max="100"
+          required
+          pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
         /><br />
         <button type="submit">
           <p class="submit-text">Add Bookmark</p>
-          <img class="submit-spinner" src="src/img/svg/spinner.svg" />
+          <img class="submit-spinner" />
         </button>
       </form>
       <p class="error-message"></p>

@@ -1,5 +1,5 @@
+public
 .tmp
-dist/
 node_modules/
 .sass-cache
 .idea

@@ -27,6 +27,13 @@ h3 {
   background: white;
   word-break: break-word;
   margin: 0 16px;
+  min-height: 44px;
+}
+
+@media only screen and (min-width: 600px) {
+  .bookmark-added {
+    min-height: 46px;
+  }
 }
 
 p {
