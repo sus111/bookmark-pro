@@ -14,7 +14,6 @@ This app is build in (plain html/css/javascript), compiled with Babel and assemb
 
 - `npm i` - install dependencies
 - `npm run dev` - start development server. project running on **http://localhost:3000/**
-- `npm test` - run minimal tests (eg: lint javascript files)
 
 ## Production
 

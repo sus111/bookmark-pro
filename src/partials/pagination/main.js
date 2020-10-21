@@ -323,7 +323,6 @@ class Pagination {
 
     // UI updates to edit & delete buttons and text element
     activeDeleteButton.disabled = true;
-    // make edit button a save button and add event listener
     if (activeEditButton) {
       activeEditButton.textContent = 'save';
       activeEditButton.setAttribute('class', 'save-button');
