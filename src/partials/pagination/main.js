@@ -6,6 +6,7 @@ import {
   getElementBySelector,
   addClickHandlerMulipleElements } from '../../js/helpers/dom';
 import { urlValidation } from '../../js/helpers/validation';
+import { httpsRegex } from '../../js/helpers/regex';
 import editSvg from '../../img/svg/edit.svg';
 import deleteSvg from '../../img/svg/delete.svg';
 
@@ -179,20 +180,26 @@ class Pagination {
    * @param {number} bookmarkId
    * @return {string}
    */
-  renderBookmarkItem = (url, currentIndex, bookmarkId) => `
-    <div class='bookmark-item' id="${bookmarkId}">
-      <span id="bookmark-text" class="bookmark-text" contenteditable="false">
-        <a href=//${url} target="_blank" rel=”noreferrer noopener">${url}</a>
-      </span>
-      <span class="button-wrapper">
-        <span><button class="edit-button" id="${currentIndex}">
-          <img src=${editSvg} id="${currentIndex}" />
-        </button></span>
-        <span><button class="delete-button" id="${currentIndex}">
-          <img src=${deleteSvg} id="${currentIndex}" />
-        </button></span>
-      </span>
-    </div>`;
+  renderBookmarkItem = (url, currentIndex, bookmarkId) => {
+    const formattedUrl = !url.match(httpsRegex) ? `https://${url}` : url;
+
+    return `
+      <div class='bookmark-item' id="${bookmarkId}">
+        <span id="bookmark-text" class="bookmark-text" contenteditable="false">
+          <a href=${formattedUrl} target="_blank" rel=”noreferrer noopener">
+            ${url}
+          </a>
+        </span>
+        <span class="button-wrapper">
+          <span><button class="edit-button" id="${currentIndex}">
+            <img src=${editSvg} id="${currentIndex}" />
+          </button></span>
+          <span><button class="delete-button" id="${currentIndex}">
+            <img src=${deleteSvg} id="${currentIndex}" />
+          </button></span>
+        </span>
+      </div>`;
+};
 
   /**
    * handleIncrementPageClick

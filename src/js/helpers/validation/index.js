@@ -1,4 +1,5 @@
 import 'regenerator-runtime/runtime';
+import { httpsRegex } from '../regex';
 
 /**
  * urlValidation - validate if paseed url is valid
@@ -25,7 +26,6 @@ export const asyncValidation = async (url) => {
   const urlPrefix = 'https://cors-anywhere.herokuapp.com/';
 
   // strip out http:// or https://
-  const httpsRegex = /^https?:\/\//;
   let formattedUrl = url;
   formattedUrl = url.match(httpsRegex) ? url.replace(httpsRegex, '') : url;
 
